@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { ListBucketsCommand, PutObjectCommand, S3Client, GetObjectCommand } from "@aws-sdk/client-s3"
+import { S3Client, ListBucketsCommand, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3"
 
 const client = new S3Client({})
 const command = new ListBucketsCommand({})
@@ -54,8 +54,20 @@ export const downloadFile = async (filename, downloadName) => {
     const { Body } = await client.send(command)
 
     await new Promise((resolve, reject) => {
-    Body.pipe(fs.createWriteStream(downloadName))
-        .on('error', err => reject(err))
-        .on('close', () => resolve())
+        Body.pipe(fs.createWriteStream(downloadName))
+            .on('error', err => reject(err))
+            .on('close', () => resolve())
     })
+}
+
+export const deleteFile = async () => {
+    const command = new DeleteObjectCommand({
+        Bucket: BUCKET,
+        Key: "upload.txt",
+    })
+    try {
+        return await client.send(command);
+    } catch (err) {
+        console.error(err)
+    }
 }
