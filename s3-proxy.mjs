@@ -4,6 +4,8 @@ import { ListBucketsCommand, PutObjectCommand, S3Client, GetObjectCommand } from
 const client = new S3Client({})
 const command = new ListBucketsCommand({})
 
+const BUCKET = "sia-test-bucket"
+
 export const listBuckets = async () => {
     try {
         const { Buckets } = await client.send(command)
@@ -16,11 +18,10 @@ export const listBuckets = async () => {
 
 export const uploadObject = async () => {
     const command = new PutObjectCommand({
-        Bucket: "sia-test-bucket",
+        Bucket: BUCKET,
         Key: "hello-world",
         Body: "Hello S3!",
     })
-    
     try {
         return await client.send(command);
     } catch (err) {
@@ -29,13 +30,13 @@ export const uploadObject = async () => {
 }
 
 export const uploadFile = async (filename) => {
+    console.log("*** Uploading file to S3 ***")
     const blob = fs.readFileSync(filename)
     const command = new PutObjectCommand({
-        Bucket: "sia-test-bucket",
+        Bucket: BUCKET,
         Key: filename,
         Body: blob,
     })
-    
     try {
         return await client.send(command);
     } catch (err) {
@@ -44,16 +45,17 @@ export const uploadFile = async (filename) => {
 }
 
 export const downloadFile = async (filename, downloadName) => {
-        const input = {
-        "Bucket": "sia-test-bucket",
+    console.log("*** Downloading file to S3 ***")
+    const input = {
+        "Bucket": BUCKET,
         "Key": filename,
-      };
-      const command = new GetObjectCommand(input)
-      const { Body } = await client.send(command)
+    }
+    const command = new GetObjectCommand(input)
+    const { Body } = await client.send(command)
 
-      await new Promise((resolve, reject) => {
-        Body.pipe(fs.createWriteStream(downloadName))
-          .on('error', err => reject(err))
-          .on('close', () => resolve())
-      })
+    await new Promise((resolve, reject) => {
+    Body.pipe(fs.createWriteStream(downloadName))
+        .on('error', err => reject(err))
+        .on('close', () => resolve())
+    })
 }
