@@ -1,8 +1,9 @@
 import { ListBucketsCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
+const client = new S3Client({})
+const command = new ListBucketsCommand({})
+
 export const listBuckets = async () => {
-    const client = new S3Client({})
-    const command = new ListBucketsCommand({})
     try {
         const { Buckets } = await client.send(command)
         return Buckets
@@ -26,3 +27,4 @@ export const uploadObject = async () => {
         console.error(err);
     }
 }
+

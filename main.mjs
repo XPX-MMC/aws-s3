@@ -1,4 +1,4 @@
-import { listBuckets } from "./s3-proxy.mjs"
+import { listBuckets, uploadObject } from "./s3-proxy.mjs"
 
 const main = async () => {
    const data = await uploadObject()
