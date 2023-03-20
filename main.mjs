@@ -1,8 +1,8 @@
-import { listBuckets, uploadObject, uploadFile, downloadObject } from "./s3-proxy.mjs"
+import { listBuckets, uploadObject, uploadFile, downloadFile } from "./s3-proxy.mjs"
 
 const main = async () => {
     //const data = await uploadFile('upload.txt')
-    // await downloadObject('upload.txt', 'download.txt')
+    await downloadFile('upload.txt', 'download.txt')
     //console.log(data)
 }
 

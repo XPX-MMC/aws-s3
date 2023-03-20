@@ -43,7 +43,7 @@ export const uploadFile = async (filename) => {
     }
 }
 
-export const downloadObject = async (filename, downloadName) => {
+export const downloadFile = async (filename, downloadName) => {
         const input = {
         "Bucket": "sia-test-bucket",
         "Key": filename,
