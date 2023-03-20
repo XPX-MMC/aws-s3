@@ -43,13 +43,17 @@ export const uploadFile = async (filename) => {
     }
 }
 
-export const downloadObject = async () => {
+export const downloadObject = async (filename, downloadName) => {
         const input = {
         "Bucket": "sia-test-bucket",
-        "Key": "upload.txt",
+        "Key": filename,
       };
       const command = new GetObjectCommand(input)
-      const response = await client.send(command)
-      console.log(response)
-}
+      const { Body } = await client.send(command)
 
+      await new Promise((resolve, reject) => {
+        Body.pipe(fs.createWriteStream(downloadName))
+          .on('error', err => reject(err))
+          .on('close', () => resolve())
+      })
+}
