@@ -61,6 +61,7 @@ export const downloadFile = async (filename, downloadName) => {
 }
 
 export const deleteFile = async () => {
+    console.log("*** Deleting file from S3 ***")
     const command = new DeleteObjectCommand({
         Bucket: BUCKET,
         Key: "upload.txt",
