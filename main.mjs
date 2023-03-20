@@ -4,7 +4,7 @@ const main = async () => {
     const data = await uploadFile('upload.txt')
     await downloadFile('upload.txt', 'download.txt')
     //const data = await deleteFile()
-    //console.log(data)
+    console.log(data)
 }
 
 main()
