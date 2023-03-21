@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { S3Client, ListBucketsCommand, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3"
+import { S3Client,PutObjectCommand, GetObjectCommand, ListBucketsCommand, DeleteObjectCommand } from "@aws-sdk/client-s3"
 
 const client = new S3Client({})
 const command = new ListBucketsCommand({})
