@@ -30,7 +30,6 @@ export const uploadObject = async () => {
 }
 
 export const uploadFile = async (filename) => {
-    console.log("*** Uploading file to S3 ***")
     const blob = fs.readFileSync(filename)
     const command = new PutObjectCommand({
         Bucket: BUCKET,
@@ -45,7 +44,6 @@ export const uploadFile = async (filename) => {
 }
 
 export const downloadFile = async (filename, downloadName) => {
-    console.log("*** Downloading file to S3 ***")
     const input = {
         "Bucket": BUCKET,
         "Key": filename,
@@ -61,7 +59,6 @@ export const downloadFile = async (filename, downloadName) => {
 }
 
 export const deleteFile = async () => {
-    console.log("*** Deleting file from S3 ***")
     const command = new DeleteObjectCommand({
         Bucket: BUCKET,
         Key: "upload.txt",
