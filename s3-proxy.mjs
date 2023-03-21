@@ -8,24 +8,24 @@ const BUCKET = "sia-test-bucket"
 
 export const uploadFile = async (filename) => {
     const blob = fs.readFileSync(filename)
-    const command = new PutObjectCommand({
+    const params = new PutObjectCommand({
         Bucket: BUCKET,
         Key: filename,
         Body: blob,
     })
     try {
-        return await client.send(command);
+        return await client.send(params);
     } catch (err) {
         console.error(err);
     }
 }
 
 export const downloadFile = async (filename, downloadName) => {
-    const input = {
+    const params = {
         "Bucket": BUCKET,
         "Key": filename,
     }
-    const command = new GetObjectCommand(input)
+    const command = new GetObjectCommand(params)
     const { Body } = await client.send(command)
 
     await new Promise((resolve, reject) => {
