@@ -6,29 +6,6 @@ const command = new ListBucketsCommand({})
 
 const BUCKET = "sia-test-bucket"
 
-export const listBuckets = async () => {
-    try {
-        const { Buckets } = await client.send(command)
-        return Buckets
-    }
-    catch(err) {
-        console.error(err)
-    }
-}
-
-export const uploadObject = async () => {
-    const command = new PutObjectCommand({
-        Bucket: BUCKET,
-        Key: "hello-world",
-        Body: "Hello S3!",
-    })
-    try {
-        return await client.send(command);
-    } catch (err) {
-        console.error(err)
-    }
-}
-
 export const uploadFile = async (filename) => {
     const blob = fs.readFileSync(filename)
     const command = new PutObjectCommand({
@@ -56,6 +33,29 @@ export const downloadFile = async (filename, downloadName) => {
             .on('error', err => reject(err))
             .on('close', () => resolve())
     })
+}
+
+export const listBuckets = async () => {
+    try {
+        const { Buckets } = await client.send(command)
+        return Buckets
+    }
+    catch(err) {
+        console.error(err)
+    }
+}
+
+export const uploadObject = async () => {
+    const command = new PutObjectCommand({
+        Bucket: BUCKET,
+        Key: "hello-world",
+        Body: "Hello S3!",
+    })
+    try {
+        return await client.send(command);
+    } catch (err) {
+        console.error(err)
+    }
 }
 
 export const deleteFile = async () => {
